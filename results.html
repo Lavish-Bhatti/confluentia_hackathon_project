@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-s8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        
+        .result-card {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 700px;
+            margin-top: 20px;
+        }
+        .result-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 15px;
+        }
+        .result-header h1 {
+            color: #333;
+        }
+        .result-flag {
+            font-size: 24px;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 8px;
+            color: #fff;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .flag-NORMAL { background-color: #28a745; } /* Green */
+        .flag-LOW { background-color: #007bff; } /* Blue */
+        .flag-HIGH { background-color: #dc3545; } /* Red */
+
+        .result-section {
+            margin-bottom: 20px;
+        }
+        .result-section h3 {
+            color: #0056b3;
+            margin-bottom: 10px;
+        }
+        .result-section ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        .result-section p, .result-section li {
+            color: #555;
+            line-height: 1.6;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="result-card">
+        <div class="result-header">
+            <h1>Analysis Complete</h1>
+        </div>
+
+        <div class="result-section">
+            <h3>Your Input</h3>
+            <p>
+                <strong>Test:</strong> {{ user_input.Test }} <br>
+                <strong>Your Result:</strong> {{ user_input.Result }} <br>
+                <strong>Sex:</strong> {{ user_input.Sex }}
+            </p>
+        </div>
+
+        <div class="result-section">
+            <h3>Result Interpretation</h3>
+            <span class="result-flag flag-{{ results.flag }}">{{ results.flag }}</span>
+            <p><strong>Reference Range:</strong> {{ results.reference_range }}</p>
+            <p><strong>Analysis:</strong> {{ results.analysis_message }}</p>
+        </div>
+
+        {% if results.flag != 'NORMAL' %}
+            <div class="result-section">
+                <h3>Possible Associated Conditions</h3>
+                <p>A {{ results.flag }} result for {{ user_input.Test }} could sometimes be associated with:</p>
+                <ul>
+                    {% for disease in results.diseases %}
+                        <li>{{ disease }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="result-section">
+                <h3>Possible Symptoms</h3>
+                 <p>Common symptoms that may be experienced include:</p>
+                <ul>
+                    {% for symptom in results.symptoms %}
+                        <li>{{ symptom }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+             <p><strong>Disclaimer:</strong> This is not a medical diagnosis. Please consult a healthcare professional for advice.</p>
+        {% endif %}
+
+        <a href="/" class="back-button">← Run a New Analysis</a>
+    </div>
+</body>
+</html>

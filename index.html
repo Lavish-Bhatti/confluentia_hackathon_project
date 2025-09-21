@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Report Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="report-container">
+        <div class="report-header">
+            <h1>Health Report Analyzer 🩺</h1>
+        </div>
+
+        <form action="/analyze" method="POST">
+            <div class="form-group">
+                <label for="sex">Sex</label>
+                <select id="sex" name="sex" class="form-select">
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="test-name">Test</label>
+                <select id="test-name" name="test_name" class="form-select">
+                    <option value="">Select a test...</option>
+                    {% for name in test_names %}
+                        <option value="{{ name }}">{{ name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="result">Result</label>
+                <input type="number" step="any" id="result" name="result" placeholder="e.g., 14.5" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label for="unit">Unit</label>
+                <select name="unit" id="unit" class="form-select">
+                    <option value="g/dL">g/dL</option>
+                    <option value="10^3/uL">10^3/uL</option>
+                    <option value="mg/dL">mg/dL</option>
+                    <option value="%">%</option>
+                    <option value="U/L">U/L</option>
+                    <option value="uIU/mL">uIU/mL</option>
+                    <option value="ng/mL">ng/mL</option>
+                    <option value="pg/mL">pg/mL</option>
+                </select>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit & Analyze</button>    
+        </form>
+    </div>
+
+</body>
+</html>
