@@ -29,7 +29,7 @@ A Flask and Pandas web app for instant analysis of blood test results.
 ---
 
 ### ## Technologies Used 🛠️
-
+* ** chatgpt, gimini for installing flask etc.
 * **Backend:** Python, Flask
 * **Data Handling:** Pandas
 * **Frontend:** HTML, CSS
